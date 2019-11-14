@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import NewForm from './components/UserForm';
 import './App.css';
 
 function App() {
@@ -8,6 +8,7 @@ function App() {
       <div>
         <h1>Advanced Forms - Formik</h1>
       </div>
+      <NewForm />
     </div>
   );
 }
