@@ -8,6 +8,9 @@ const UserForm = ({ values, touched, errors, status }) => {
     // Add slice of state for 'user'
     const [users, setUsers] = useState([]);
 
+    useEffect(() => {
+        status && setUsers(users => [...users, status]);
+    }, [status])
 
     return (
         <div>
@@ -18,30 +21,30 @@ const UserForm = ({ values, touched, errors, status }) => {
                     type='text'
                     name='name'
                     placeholder='name'
-                // {touched.name && errors.name && <p>{errors.name}</p>}
                 />
+                {touched.name && errors.name && <p>{errors.name}</p>}
                 <Field
                     type='text'
                     name='email'
                     placeholder='email'
-                // {touched.email && errors.email && <p>{errors.email}</p>}
                 />
+                {touched.email && errors.email && <p>{errors.email}</p>}
                 <Field
                     type='text'
                     name='password'
                     placeholder='password'
-                // {touched.password && errors.password && <p>{errors.password}</p>}
                 />
+                {touched.password && errors.password && <p>{errors.password}</p>}
                 <Field
                     type='checkbox'
                     name='terms'
                     checked={values.terms}
                 />
-                <button>Submit</button>
+                <button type='submit'>Submit</button>
             </Form>
             {/* map over users --> output values: name, email, password */}
             {users.map(user => (
-                <ul>
+                <ul key={user.id}>
                     <li>{user.name}</li>
                     <li>{user.email}</li>
                     <li>{user.password}</li>
@@ -68,7 +71,19 @@ const FormikUserSignUpForm = withFormik({
         name: Yup.string().required('Please type in your name'),
         email: Yup.string().required('Please type in your email'),
         password: Yup.string().required('Please type in a strong password')
-    })
+    }),
+    handleSubmit(values, { setStatus }) {
+        //values is our object with all our data on it
+        axios
+            .post('https://reqres.in/api/users', values)
+            .then(response => {
+                setStatus(response.data);
+                console.log(response);
+            })
+            .catch(error => {
+                console.log('The data did not return', error)
+            })
+    }
 })(UserForm)
 
 export default FormikUserSignUpForm;
