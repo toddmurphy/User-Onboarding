@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import styled from 'styled-components';
+
+
 
 
 const UserForm = ({ values, touched, errors, status }) => {
@@ -31,38 +34,69 @@ const UserForm = ({ values, touched, errors, status }) => {
                 {touched.email && errors.email && <p>{errors.email}</p>}
                 <Field
                     type='text'
+                    name='address'
+                    placeholder='address'
+                />
+                <Field
+                    type='text'
+                    name='country'
+                    placeholder='country'
+                />
+                <Field
+                    type='text'
                     name='password'
                     placeholder='password'
                 />
                 {touched.password && errors.password && <p>{errors.password}</p>}
+                <Field as='select' name='role'>
+                    <option value='designer'>Designer</option>
+                    <option value='frontend'>Front-End Developer</option>
+                    <option value='backend'>Back-End Developer</option>
+                    <option value='ios'>iOS Developer</option>
+                </Field>
                 <Field
                     type='checkbox'
                     name='terms'
                     checked={values.terms}
                 />
+                <Field
+                    type='text'
+                    name='cohort'
+                    placeholder='Lambda cohort team'
+                />
                 <button type='submit'>Submit</button>
             </Form>
             {/* map over users --> output values: name, email, password */}
-            {users.map(user => (
-                <ul key={user.id}>
-                    <li>{user.name}</li>
-                    <li>{user.email}</li>
-                    <li>{user.password}</li>
-                </ul>
-            ))}
-        </div>
+            {
+                users.map(user => (
+                    <ul key={user.id}>
+                        <li>{user.name}</li>
+                        <li>{user.email}</li>
+                        <li>{user.address}</li>
+                        <li>{user.country}</li>
+                        <li>{user.password}</li>
+                        <li>{user.role}</li>
+                        <li>{user.cohort}</li>
+                    </ul>
+                ))
+            }
+        </div >
     );
 }
 
 const FormikUserSignUpForm = withFormik({
-    mapPropsToValues({ name, email, password, terms }) {
+    mapPropsToValues({ name, email, address, country, password, role, cohort, terms }) {
         return {
             //add properties or key values here -> name, email, password, terms of service(checkbox) --> LINKS(maps) to 'name' property in 'Field' inputs
             //Set each property to empty string '' for those that text inputs
             //Set property true/false for checkbox
             name: name || '',
             email: email || '',
+            address: address || '',
+            country: country || '',
             password: password || '',
+            role: role || '',
+            cohort: cohort || '',
             terms: terms || false
         };
     },
