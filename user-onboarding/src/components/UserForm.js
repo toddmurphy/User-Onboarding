@@ -37,11 +37,13 @@ const UserForm = ({ values, touched, errors, status }) => {
                     name='address'
                     placeholder='address'
                 />
+                {touched.address && errors.address && <p>{errors.address}</p>}
                 <Field
                     type='text'
                     name='country'
                     placeholder='country'
                 />
+                {touched.country && errors.country && <p>{errors.country}</p>}
                 <Field
                     type='text'
                     name='password'
@@ -102,12 +104,14 @@ const FormikUserSignUpForm = withFormik({
     },
     validationSchema: Yup.object().shape({
         // Add validation for each Field input
-        name: Yup.string().required('Please type in your name'),
-        email: Yup.string().required('Please type in your email'),
-        password: Yup.string().required('Please type in a strong password')
+        name: Yup.string().required('Please type in your real name'),
+        email: Yup.string().required('Please type in your email, no hotmail allowed'),
+        address: Yup.string().required('Yo, what address you live at?'),
+        country: Yup.string().required('Dude, what country you from?'),
+        password: Yup.string().required('He,him,them,she,her,they - that password has to be there')
     }),
     handleSubmit(values, { setStatus }) {
-        //values is our object with all our data on it
+        //values is our object with all our data on its
         axios
             .post('https://reqres.in/api/users', values)
             .then(response => {
