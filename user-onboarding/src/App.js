@@ -1,5 +1,5 @@
 import React from 'react';
-import NewForm from './components/UserForm';
+import UserForm from './components/UserForm';
 import './App.css';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
       <div>
         <h1>Advanced Forms - Formik</h1>
       </div>
-      <NewForm />
+      <UserForm />
     </div>
   );
 }
