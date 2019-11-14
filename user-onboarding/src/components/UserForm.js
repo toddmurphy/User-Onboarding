@@ -4,7 +4,11 @@ import * as Yup from 'yup';
 import axios from 'axios';
 
 
-const UserForm = ({ values }) => {
+const UserForm = ({ values, touched, errors, status }) => {
+    // Add slice of state for 'user'
+    const [users, setUsers] = useState([]);
+
+
     return (
         <div>
             <h3>Onboarding - new user sign up </h3>
@@ -14,16 +18,19 @@ const UserForm = ({ values }) => {
                     type='text'
                     name='name'
                     placeholder='name'
+                // {touched.name && errors.name && <p>{errors.name}</p>}
                 />
                 <Field
                     type='text'
                     name='email'
                     placeholder='email'
+                // {touched.email && errors.email && <p>{errors.email}</p>}
                 />
                 <Field
                     type='text'
                     name='password'
                     placeholder='password'
+                // {touched.password && errors.password && <p>{errors.password}</p>}
                 />
                 <Field
                     type='checkbox'
@@ -32,6 +39,14 @@ const UserForm = ({ values }) => {
                 />
                 <button>Submit</button>
             </Form>
+            {/* map over users --> output values: name, email, password */}
+            {users.map(user => (
+                <ul>
+                    <li>{user.name}</li>
+                    <li>{user.email}</li>
+                    <li>{user.password}</li>
+                </ul>
+            ))}
         </div>
     );
 }
@@ -47,7 +62,13 @@ const FormikUserSignUpForm = withFormik({
             password: password || '',
             terms: terms || false
         };
-    }
+    },
+    validationSchema: Yup.object().shape({
+        // Add validation for each Field input
+        name: Yup.string().required('Please type in your name'),
+        email: Yup.string().required('Please type in your email'),
+        password: Yup.string().required('Please type in a strong password')
+    })
 })(UserForm)
 
 export default FormikUserSignUpForm;
