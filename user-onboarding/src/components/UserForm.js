@@ -6,6 +6,10 @@ import styled from 'styled-components';
 
 
 
+const ListStyle = styled.ul`
+    text-decoration: none;
+    padding: 1% 0;
+`
 
 const UserForm = ({ values, touched, errors, status }) => {
     // Add slice of state for 'user'
@@ -72,13 +76,13 @@ const UserForm = ({ values, touched, errors, status }) => {
             {
                 users.map(user => (
                     <ul key={user.id}>
-                        <li>{user.name}</li>
-                        <li>{user.email}</li>
-                        <li>{user.address}</li>
-                        <li>{user.country}</li>
-                        <li>{user.password}</li>
-                        <li>{user.role}</li>
-                        <li>{user.cohort}</li>
+                        <ListStyle>{user.name}</ListStyle>
+                        <ListStyle>{user.email}</ListStyle>
+                        <ListStyle>{user.address}</ListStyle>
+                        <ListStyle>{user.country}</ListStyle>
+                        <ListStyle>{user.password}</ListStyle>
+                        <ListStyle>{user.role}</ListStyle>
+                        <ListStyle>{user.cohort}</ListStyle>
                     </ul>
                 ))
             }
