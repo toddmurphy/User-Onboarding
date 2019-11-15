@@ -114,7 +114,7 @@ const FormikUserSignUpForm = withFormik({
         country: Yup.string().required('Dude, what country you from?'),
         password: Yup.string().required('He,him,them,she,her,they - that password has to be there')
     }),
-    handleSubmit(values, { setStatus }) {
+    handleSubmit(values, { setStatus, resetForm }) {
         //values is our object with all our data on its
         axios
             .post('https://reqres.in/api/users', values)
@@ -125,6 +125,7 @@ const FormikUserSignUpForm = withFormik({
             .catch(error => {
                 console.log('The data did not return', error)
             })
+            .finally(resetForm)
     }
 })(UserForm)
 
