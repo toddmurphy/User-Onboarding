@@ -112,7 +112,8 @@ const FormikUserSignUpForm = withFormik({
         email: Yup.string().required('Please type in your email, no hotmail allowed'),
         address: Yup.string().required('Yo, what address you live at?'),
         country: Yup.string().required('Dude, what country you from?'),
-        password: Yup.string().required('He,him,them,she,her,they - that password has to be there')
+        password: Yup.string().required('He,him,them,she,her,they - that password has to be there'),
+        terms: Yup.boolean().oneOf([true], 'You must agree to terms of service')
     }),
     handleSubmit(values, { setStatus, resetForm }) {
         //values is our object with all our data on its
